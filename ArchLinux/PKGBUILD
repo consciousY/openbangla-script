@@ -1,4 +1,3 @@
-# Maintainer: Sourav Das <souravdas142@gmail.com>
 pkgname=fcitx5-openbangla-git
 pkgver=2.0.0.r110.gb1a3a6f
 pkgrel=1
@@ -18,9 +17,9 @@ depends=(
     'qt5-base'       # QT integration core
     'zstd'           # Compression library used
     'gcc-libs'       # Runtime libraries
-    'fcitx5-configtool: Configuration GUI'
-    'fcitx5-qt: Better Qt integration'
-    'fcitx5-gtk: GTK applications support'
+    'fcitx5-configtool'
+    'fcitx5-qt'
+    'fcitx5-gtk'
 )
 
 # Build-time dependencies (only needed during compilation)
@@ -32,10 +31,6 @@ makedepends=(
 )
 
 # Optional components (enhanced functionality)
-optdepends=(
-    'ttf-indic-otf: Bangla fonts'
-    'ttf-freebanglafont: Additional Bangla fonts'
-)
 
 source=(
     "openbangla-keyboard::git+https://github.com/OpenBangla/OpenBangla-Keyboard#branch=develop"
