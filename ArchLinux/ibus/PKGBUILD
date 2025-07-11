@@ -1,0 +1,61 @@
+pkgname=ibus-openbangla-git
+pkgver=2.0.0.r110.gb1a3a6f
+pkgrel=1
+pkgdesc="An OpenSource Bengali Input Method for Fcitx5"
+arch=('x86_64')
+url="https://openbangla.github.io"
+license=('GPL3')
+
+# Handle conflicts/replaces with openbangla-keyboard-bin
+provides=('openbangla-keyboard' 'openbangla-keyboard-bin')
+conflicts=('openbangla-keyboard' 'openbangla-keyboard-bin')
+replaces=('openbangla-keyboard-bin')
+
+# Runtime dependencies (must be present when using the package)
+depends=(
+    'ibus'           # Core requirement
+    'qt5-base'       # QT integration core
+    'zstd'           # Compression library used
+    'gcc-libs'       # Runtime libraries
+    'libibus'        # Core requirement
+)
+
+# Build-time dependencies (only needed during compilation)
+makedepends=(
+    'base-devel'     # Basic build tools
+    'cmake'          # Build system
+    'rust'           # For engine components
+    'git'            # For cloning repos
+)
+
+# Optional components (enhanced functionality)
+
+source=(
+    "openbangla-keyboard::git+https://github.com/OpenBangla/OpenBangla-Keyboard#branch=develop"
+    "riti::git+https://github.com/OpenBangla/riti"
+)
+sha256sums=('SKIP' 'SKIP')
+
+pkgver() {
+    cd "$srcdir/openbangla-keyboard"
+    git describe --tags --long | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+prepare() {
+    cd "$srcdir/openbangla-keyboard"
+    git submodule init
+    git config submodule."src/engine/riti".url "$srcdir/riti"
+    git -c protocol.file.allow=always submodule update --recursive
+}
+
+build() {
+    cmake -B build -S openbangla-keyboard \
+        -DCMAKE_INSTALL_PREFIX="/usr" \
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+        -DENABLE_IBUS=OFF
+    make -C build -j$(nproc)
+}
+
+package() {
+    make -C build DESTDIR="$pkgdir" install
+}
