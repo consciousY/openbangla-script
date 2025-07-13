@@ -83,19 +83,19 @@ printf "${attention}\n!! Installing necessary packages using ${pkg} \n"
 # Install required packages based on the detected package manager
 case "$pkg" in
     pacman)
-        sudo pacman -S --noconfirm base-devel rust cmake qt5-base libibus zstd fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk git
+        sudo pacman -S --noconfirm base-devel rust cmake qt5-base zstd fcitx5 fcitx5-configtool fcitx5-qt fcitx5-gtk git
         ;;
     dnf)
-        sudo dnf install -y @development-tools rust cargo cmake qt5-qtdeclarative-devel ibus-devel libzstd-devel git fcitx5 fcitx5-configtool fcitx5-devel fcitx5-qt5
+        sudo dnf install -y @development-tools rust cargo cmake qt5-qtdeclarative-devel libzstd-devel fcitx5 fcitx5-configtool fcitx5-devel fcitx5-qt5 git
         ;;
     zypper)
-        sudo zypper in -y libQt5Core-devel libQt5Widgets-devel libQt5Network-devel libzstd-devel libzstd1 cmake make ninja rust ibus-devel ibus clang gcc patterns-devel-base-devel_basis git fcitx5-devel fcitx5 fcitx5-configtool
+        sudo zypper in -y libQt5Core-devel libQt5Widgets-devel libQt5Network-devel libzstd-devel libzstd1 cmake make ninja rust clang gcc patterns-devel-base-devel_basis fcitx5-devel fcitx5 fcitx5-configtool git
         ;;
     xbps-install)
-        sudo xbps-install -y base-devel make cmake rust cargo qt5-declarative-devel libzstd-devel qt5-devel git ibus ibus-devel fcitx5 libfcitx5-devel fcitx5-configtool
+        sudo xbps-install -y base-devel make cmake rust cargo qt5-declarative-devel libzstd-devel qt5-devel fcitx5 libfcitx5-devel fcitx5-configtool git
         ;;
     apt)
-        sudo apt install -y build-essential rustc cargo curl cmake libibus-1.0-dev qtbase5-dev qtbase5-dev-tools libzstd-dev libfcitx5core-dev fcitx5 fcitx5-config-qt git
+        sudo apt install -y build-essential rustc cargo curl cmake qtbase5-dev qtbase5-dev-tools libzstd-dev libfcitx5core-dev fcitx5 fcitx5-config-qt git
 
         ### Rust upgrade for apt ###
         printf "${note}\n* Detected Debian-based system. Ensuring Rust is up-to-date via rustup...\n"
