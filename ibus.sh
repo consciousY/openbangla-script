@@ -171,7 +171,7 @@ mkdir build && cd build || {
 
 # Run CMake
 if [[ "$pkg" == "pacman" ]]; then
-    cmake .. -DCMAKE_INSTALL_PREFIX="/usr" -DENABLE_IBUS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5 2>&1 | tee -a "$log" || {
+    cmake .. -DCMAKE_EXPERIMENTAL_RUST=3cc9b32c-47d3-4056-8953-d74e69fc0d6c -DENABLE_IBUS=ON -DENABLE_FCITX=OFF -DCMAKE_INSTALL_PREFIX="/usr" 2>&1 | tee -a "$log" || {
         printf "${error}\n! CMake configuration failed\n"
         exit 1
     }
